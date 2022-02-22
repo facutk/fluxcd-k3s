@@ -51,8 +51,7 @@ metadata:
 spec:
   ingressClassName: simple-rest-golang
   rules:
-    - host: k3s.facu.tk
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
