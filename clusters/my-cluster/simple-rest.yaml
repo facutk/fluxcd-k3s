@@ -41,7 +41,7 @@ spec:
   selector:
     app: simple-rest-golang
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: simple-rest-golang-ingress
@@ -49,10 +49,14 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "traefik"
 spec:
+  ingressClassName: simple-rest-golang
   rules:
     - http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: simple-rest-golang-service
-              servicePort: 80
+              service:
+                name: simple-rest-golang-service
+                port:
+                  number: 80
