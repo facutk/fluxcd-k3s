@@ -46,8 +46,6 @@ kind: Ingress
 metadata:
   name: simple-rest-golang-ingress
   namespace: default
-  annotations:
-    kubernetes.io/ingress.class: "traefik"
 spec:
   ingressClassName: simple-rest-golang
   rules:
