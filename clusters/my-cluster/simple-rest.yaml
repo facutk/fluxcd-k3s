@@ -46,10 +46,13 @@ kind: Ingress
 metadata:
   name: simple-rest-golang-ingress
   namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   ingressClassName: simple-rest-golang
   rules:
-    - http:
+    - host: k3s.facu.tk
+      http:
         paths:
           - path: /
             pathType: Prefix
