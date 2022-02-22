@@ -25,7 +25,7 @@ spec:
               memory: "128Mi"
               cpu: "500m"
           ports:
-          - containerPort: 8080
+            - containerPort: 8080
           imagePullPolicy: Always
 ---
 apiVersion: v1
@@ -35,12 +35,12 @@ metadata:
   namespace: retail-project-dev
 spec:
   ports:
-  - port: 80
-    targetPort: 8080
-    name: tcp
+    - port: 80
+      targetPort: 8080
+      name: tcp
   selector:
     app: simple-rest-golang
---------
+---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -50,9 +50,9 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: simple-rest-golang-service
-          servicePort: 80
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: simple-rest-golang-service
+              servicePort: 80
