@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: hello-html
-          image: facutk/hello-html:latests
+          image: facutk/hello-html:latest
           resources:
             requests:
               memory: "64Mi"
