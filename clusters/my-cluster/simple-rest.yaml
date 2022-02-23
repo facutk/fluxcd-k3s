@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: facutk-hello-html
+  name: facutk-hello-html-deployment
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-html
+      app: facutk-hello-html
   template:
     metadata:
       labels:
-        app: hello-html
+        app: facutk-hello-html
     spec:
       containers:
-        - name: hello-html
+        - name: facutk-hello-html
           image: facutk/hello-html:latest
           resources:
             requests:
@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: facutk-hello-html
+  name: facutk-hello-html-service
   namespace: default
 spec:
   ports:
@@ -98,7 +98,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: facutk-hello-html
+                name: facutk-hello-html-service
                 port:
                   number: 80
           - path: /
