@@ -2,6 +2,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: facutk-hello-html
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-html
+  template:
+    metadata:
+      labels:
+        app: hello-html
+    spec:
+      containers:
+        - name: hello-html
+          image: facutk/hello-html:latests
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: facutk-hello-html
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      name: tcp
+  selector:
+    app: facutk-hello-html
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: simple-rest-golang-deployment
   namespace: default
 spec:
@@ -52,6 +94,13 @@ spec:
   rules:
     - http:
         paths:
+          - path: /hello-html
+            pathType: Prefix
+            backend:
+              service:
+                name: facutk-hello-html
+                port:
+                  number: 80
           - path: /
             pathType: Prefix
             backend:
