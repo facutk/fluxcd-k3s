@@ -94,17 +94,17 @@ spec:
   rules:
     - http:
         paths:
-          - path: /hello-html
+          - path: /notes
             pathType: Prefix
             backend:
               service:
-                name: facutk-hello-html-service
+                name: simple-rest-golang-service
                 port:
                   number: 80
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: simple-rest-golang-service
+                name: facutk-hello-html-service
                 port:
                   number: 80
