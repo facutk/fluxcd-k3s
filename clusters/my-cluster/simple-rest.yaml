@@ -5,7 +5,7 @@ metadata:
   name: facutk-hello-html-deployment
   namespace: default
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: facutk-hello-html
