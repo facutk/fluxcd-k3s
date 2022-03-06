@@ -18,13 +18,13 @@ spec:
         - name: facutk-hello-html
           image: facutk/hello-html:1.0.0-rc.5
           # image: facutk/hello-html:1.0.0-rc.5 # {"$imagepolicy": "flux-system:facutk-hello-html-policy"}
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "100m"
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          # resources:
+            # requests:
+              # memory: "64Mi"
+              # cpu: "100m"
+            # limits:
+              # memory: "128Mi"
+              # cpu: "500m"
           ports:
             - containerPort: 80
           imagePullPolicy: Always
