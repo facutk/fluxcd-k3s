@@ -45,7 +45,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
 metadata:
   name: hello-html
-  namespace: default
+  namespace: flux-system
 spec:
   image: facutk/hello-html
   interval: 1m0s
@@ -54,7 +54,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: hello-html
-  namespace: default
+  namespace: flux-system
 spec:
   imageRepositoryRef:
     name: hello-html
@@ -66,7 +66,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
   name: flux-system
-  namespace: default
+  namespace: flux-system
 spec:
   interval: 1m0s
   sourceRef:
