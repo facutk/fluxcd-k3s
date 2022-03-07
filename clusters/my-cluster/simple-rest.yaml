@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: facutk-hello-html-deployment
+  name: hello-html
   namespace: default
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: facutk-hello-html
+      app: hello-html
   template:
     metadata:
       labels:
-        app: facutk-hello-html
+        app: hello-html
     spec:
       containers:
-        - name: facutk-hello-html
+        - name: hello-html
           image: facutk/hello-html:1.0.0-rc.5 # {"$imagepolicy": "flux-system:hello-html"}
           # resources:
             # requests:
@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: facutk-hello-html-service
+  name: hello-html
   namespace: default
 spec:
   ports:
@@ -39,7 +39,7 @@ spec:
       targetPort: 80
       name: tcp
   selector:
-    app: facutk-hello-html
+    app: hello-html
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
@@ -151,6 +151,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: facutk-hello-html-service
+                name: hello-html
                 port:
                   number: 80
