@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
         - name: facutk-hello-html
-          image: facutk/hello-html:1.0.0-rc.5
-          # image: facutk/hello-html:1.0.0-rc.5 # {"$imagepolicy": "flux-system:facutk-hello-html-policy"}
+          image: facutk/hello-html:1.0.0-rc.5 # {"$imagepolicy": "flux-system:hello-html"}
           # resources:
             # requests:
               # memory: "64Mi"
@@ -41,45 +40,52 @@ spec:
       name: tcp
   selector:
     app: facutk-hello-html
-# ---
-# apiVersion: image.toolkit.fluxcd.io/v1alpha1
-# kind: ImageRepository
-# metadata:
-#   name: facutk-hello-repo
-#   namespace: flux-system
-# spec:
-#   image: facutk/hello-html
-#   interval: 1m0s
-# ---
-# apiVersion: image.toolkit.fluxcd.io/v1alpha1
-# kind: ImagePolicy
-# metadata:
-#   name: facutk-hello-html-policy
-#   namespace: flux-system
-# spec:
-#   imageRepositoryRef:
-#     name: facutk-hello-repo
-#   policy:
-#     semver:
-#       range: ^1.x-0
-# ---
-# apiVersion: image.toolkit.fluxcd.io/v1alpha1
-# kind: ImageUpdateAutomation
-# metadata:
-#   name: facutk-hello-automation
-#   namespace: flux-system
-# spec:
-#   checkout:
-#     branch: main
-#     gitRepositoryRef:
-#       name: hello-html
-#   commit:
-#     authorEmail: fluxcdbot@particule.io
-#     authorName: fluxcdbot
-#     messageTemplate: "update image"
-#   interval: 1m0s
-#   update:
-#     strategy: Setters
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: hello-html
+  namespace: flux-system
+spec:
+  image: facutk/hello-html
+  interval: 1m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: hello-html
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: hello-html
+  policy:
+    semver:
+      range: ^1.x-0
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: flux-system
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+    push:
+      branch: main
+  update:
+    path: ./clusters/my-cluster
+    strategy: Setters
 ---
 apiVersion: apps/v1
 kind: Deployment
