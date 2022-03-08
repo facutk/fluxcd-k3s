@@ -14,18 +14,18 @@ spec:
         app: hello-html
     spec:
       containers:
-      - name: hello-html
-        image: facutk/hello-html:1.0.0-rc.6 # {"$imagepolicy": "flux-system:hello-html"}
-        # resources:
-        # requests:
-        # memory: "64Mi"
-        # cpu: "100m"
-        # limits:
-        # memory: "128Mi"
-        # cpu: "500m"
-        ports:
-        - containerPort: 80
-        imagePullPolicy: Always
+        - name: hello-html
+          image: facutk/hello-html:1.0.0-rc.6 # {"$imagepolicy": "flux-system:hello-html"}
+          # resources:
+          # requests:
+          # memory: "64Mi"
+          # cpu: "100m"
+          # limits:
+          # memory: "128Mi"
+          # cpu: "500m"
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -34,9 +34,9 @@ metadata:
   namespace: default
 spec:
   ports:
-  - port: 80
-    targetPort: 80
-    name: tcp
+    - port: 80
+      targetPort: 80
+      name: tcp
   selector:
     app: hello-html
 ---
@@ -79,7 +79,7 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+      messageTemplate: "{{range .Updated.Images}}{{println .}}{{end}}"
     push:
       branch: main
   update:
@@ -102,18 +102,18 @@ spec:
         app: simple-rest-golang
     spec:
       containers:
-      - name: simple-rest-golang
-        image: fransafu/simple-rest-golang:1.0.0
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "100m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 8080
-        imagePullPolicy: Always
+        - name: simple-rest-golang
+          image: fransafu/simple-rest-golang:1.0.0
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -122,11 +122,24 @@ metadata:
   namespace: default
 spec:
   ports:
-  - port: 80
-    targetPort: 8080
-    name: tcp
+    - port: 80
+      targetPort: 8080
+      name: tcp
   selector:
     app: simple-rest-golang
+---
+# Middleware
+# Strip prefix /notes
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: mw-admin
+  namespace: default
+spec:
+  stripPrefix:
+    forceSlash: false
+    prefixes:
+      - /notes
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -134,22 +147,24 @@ metadata:
   name: simple-rest-golang-ingress
   namespace: default
   annotations:
+    kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: default-mw-admin@kubernetescrd
 spec:
   rules:
-  - http:
-      paths:
-      - path: /notes
-        pathType: Prefix
-        backend:
-          service:
-            name: simple-rest-golang-service
-            port:
-              number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: hello-html
-            port:
-              number: 80
+    - http:
+        paths:
+          - path: /notes
+            pathType: Prefix
+            backend:
+              service:
+                name: simple-rest-golang-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hello-html
+                port:
+                  number: 80
