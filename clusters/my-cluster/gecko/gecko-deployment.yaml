@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gecko
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gecko
+  template:
+    metadata:
+      labels:
+        app: gecko
+    spec:
+      containers:
+        - name: gecko
+          image: facutk/gecko:0.0.8 # {"$imagepolicy": "flux-system:gecko"}
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always

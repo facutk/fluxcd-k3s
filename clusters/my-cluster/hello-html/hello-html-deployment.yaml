@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-html
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-html
+  template:
+    metadata:
+      labels:
+        app: hello-html
+    spec:
+      containers:
+        - name: hello-html
+          image: facutk/hello-html:1.0.0-rc.6 # {"$imagepolicy": "flux-system:hello-html"}
+          # resources:
+          # requests:
+          # memory: "64Mi"
+          # cpu: "100m"
+          # limits:
+          # memory: "128Mi"
+          # cpu: "500m"
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
