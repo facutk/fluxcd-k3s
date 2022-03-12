@@ -14,8 +14,8 @@ spec:
         app: gecko
     spec:
       containers:
-        - name: gecko
-          image: facutk/gecko:0.0.8 # {"$imagepolicy": "flux-system:gecko"}
-          ports:
-            - containerPort: 8080
-          imagePullPolicy: Always
+      - name: gecko
+        image: facutk/gecko:0.0.9 # {"$imagepolicy": "flux-system:gecko"}
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
