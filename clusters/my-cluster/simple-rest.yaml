@@ -4,7 +4,7 @@ metadata:
   name: hello-html
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hello-html
@@ -61,6 +61,64 @@ spec:
     semver:
       range: ^1.x-0
 ---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gecko
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gecko
+  template:
+    metadata:
+      labels:
+        app: gecko
+    spec:
+      containers:
+        - name: gecko
+          image: facutk/gecko:0.0.8 # {"$imagepolicy": "flux-system:gecko"}
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gecko
+  namespace: default
+spec:
+  ports:
+    - port: 8080
+      targetPort: 80
+      name: tcp
+  selector:
+    app: gecko
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: gecko
+  namespace: flux-system
+spec:
+  image: facutk/gecko
+  interval: 1m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: gecko
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: gecko
+  policy:
+    semver:
+      range: ^0.x-0
+---
+
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
@@ -140,6 +198,7 @@ spec:
     forceSlash: false
     prefixes:
       - /notes
+      - /gecko
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -154,6 +213,13 @@ spec:
   rules:
     - http:
         paths:
+          - path: /gecko
+            pathType: Prefix
+            backend:
+              service:
+                name: gecko
+                port:
+                  number: 80
           - path: /notes
             pathType: Prefix
             backend:
