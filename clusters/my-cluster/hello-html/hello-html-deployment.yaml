@@ -14,15 +14,15 @@ spec:
         app: hello-html
     spec:
       containers:
-        - name: hello-html
-          image: facutk/hello-html:0.0.1 # {"$imagepolicy": "flux-system:hello-html"}
-          # resources:
-          # requests:
-          # memory: "64Mi"
-          # cpu: "100m"
-          # limits:
-          # memory: "128Mi"
-          # cpu: "500m"
-          ports:
-            - containerPort: 80
-          imagePullPolicy: Always
+      - name: hello-html
+        image: facutk/hello-html:0.0.2 # {"$imagepolicy": "flux-system:hello-html"}
+        # resources:
+        # requests:
+        # memory: "64Mi"
+        # cpu: "100m"
+        # limits:
+        # memory: "128Mi"
+        # cpu: "500m"
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
