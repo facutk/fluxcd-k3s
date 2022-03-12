@@ -8,4 +8,4 @@ spec:
     name: hello-html
   policy:
     semver:
-      range: ^1.x-0
+      range: ^0.x-0
