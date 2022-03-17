@@ -9,3 +9,4 @@ spec:
     prefixes:
       - /notes
       - /gecko
+      - /regecko

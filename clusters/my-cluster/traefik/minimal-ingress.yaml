@@ -18,6 +18,13 @@ spec:
                 name: gecko
                 port:
                   number: 80
+          - path: /regecko
+            pathType: Prefix
+            backend:
+              service:
+                name: regecko
+                port:
+                  number: 80
           - path: /notes
             pathType: Prefix
             backend:

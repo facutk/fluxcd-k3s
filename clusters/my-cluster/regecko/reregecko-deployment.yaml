@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: regecko
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: regecko
+  template:
+    metadata:
+      labels:
+        app: regecko
+    spec:
+      containers:
+        - name: regecko
+          image: facutk/gecko:0.0.12 # {"$imagepolicy": "flux-system:gecko"}
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
