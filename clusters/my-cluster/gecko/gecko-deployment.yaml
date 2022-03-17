@@ -14,8 +14,15 @@ spec:
         app: gecko
     spec:
       containers:
-      - name: gecko
-        image: facutk/gecko:0.0.13 # {"$imagepolicy": "flux-system:gecko"}
-        ports:
-        - containerPort: 8080
-        imagePullPolicy: Always
+        - name: gecko
+          image: facutk/gecko:0.0.13 # {"$imagepolicy": "flux-system:gecko"}
+          volumeMounts:
+            - name: volv
+              mountPath: /data
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+      volumes:
+        - name: volv
+          persistentVolumeClaim:
+            claimName: local-path-pvc
