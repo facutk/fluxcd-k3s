@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: gecko
-        image: facutk/gecko:0.0.12 # {"$imagepolicy": "flux-system:gecko"}
+        image: facutk/gecko:0.0.13 # {"$imagepolicy": "flux-system:gecko"}
         ports:
         - containerPort: 8080
         imagePullPolicy: Always
