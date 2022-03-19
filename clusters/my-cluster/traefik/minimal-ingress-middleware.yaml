@@ -7,5 +7,4 @@ spec:
   stripPrefix:
     forceSlash: false
     prefixes:
-      - /notes
       - /gecko
