@@ -4,5 +4,5 @@ metadata:
   name: hello-html
   namespace: flux-system
 spec:
-  image: facutk/hello-html
+  image: ghcr.io/facutk/hello-html
   interval: 1m0s
