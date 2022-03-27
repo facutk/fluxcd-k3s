@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: hello-html
-        image: facutk/hello-html:0.0.20220327150313-e68cbd7 # {"$imagepolicy": "flux-system:hello-html"}
+        image: facutk/hello-html:0.0.20220327160338-208e804 # {"$imagepolicy": "flux-system:hello-html"}
         resources:
           requests:
             memory: "64Mi"
