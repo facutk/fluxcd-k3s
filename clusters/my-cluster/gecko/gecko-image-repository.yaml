@@ -4,5 +4,5 @@ metadata:
   name: gecko
   namespace: flux-system
 spec:
-  image: facutk/gecko
+  image: ghcr.io/facutk/gecko
   interval: 1m0s
