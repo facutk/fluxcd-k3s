@@ -19,7 +19,7 @@ spec:
           claimName: local-path-pvc
       containers:
       - name: gecko
-        image: facutk/gecko:0.0.20220325020330-f554a19 # {"$imagepolicy": "flux-system:gecko"}
+        image: ghcr.io/facutk/gecko:0.0.20220327180350-227f30f # {"$imagepolicy": "flux-system:gecko"}
         resources:
           requests:
             memory: "64Mi"
